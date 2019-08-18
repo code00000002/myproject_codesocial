@@ -9,5 +9,5 @@
     开发工具idea<br/> 
     maven<br/>
     docker<br/>
-    centos7
-    VMware Workstation Pro 12<br/>
+    centos7<br/>
+    VMware Workstation Pro 12
