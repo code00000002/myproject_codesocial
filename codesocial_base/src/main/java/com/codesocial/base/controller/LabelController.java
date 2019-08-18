@@ -2,11 +2,15 @@ package com.codesocial.base.controller;
 
 import com.codesocial.base.pojo.Label;
 import com.codesocial.base.service.LabelService;
+import com.codesocial.entity.PageResult;
 import com.codesocial.entity.Result;
+import com.codesocial.entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("label")
@@ -58,5 +62,25 @@ public class LabelController {
     public Result deleteById(@PathVariable("labelId") String labelId){
         labelService.deleteById(labelId);
         return Result.success("根据id删除成功");
+    }
+
+    /**
+     * 按条件搜索查询
+     * @return
+     */
+    @PostMapping("/search")
+    public Result findSearch(@RequestBody Map<String,Object> map){
+        return new Result(true, StatusCode.OK, "按条件搜索查询成功", labelService.findSearch(map));
+    }
+
+    /**
+     * 按条件查询，结果分页显示
+     * /search/{page}/{size}
+     */
+    @PostMapping("/search/{page}/{size}")
+    public Result findSearchPage(@RequestBody Map<String,Object> map,@PathVariable("page")int page,@PathVariable("size") int size){
+        Page<Label> labelPage = labelService.findPage(map,page,size);
+        PageResult<Label> pageResult = new PageResult<Label>(labelPage.getTotalElements(),labelPage.getContent());
+        return Result.success("按条件分页查询成功",pageResult);
     }
 }

@@ -10,6 +10,7 @@
     <modules>
         <module>codesocial_common</module>
         <module>codesocial_base</module>
+        <module>codesocial_recruit</module>
     </modules>
     <packaging>pom</packaging>
 
