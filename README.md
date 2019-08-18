@@ -1,4 +1,4 @@
-##代码社交项目，又名程序员交友平台
+##代码社交项目，又名程序员交友平台<br/>
 技术架构：
     前后端分离
     后端采用spring全家桶，Spring Boot + Spring Cloud + SpringMVC + Spring Data
