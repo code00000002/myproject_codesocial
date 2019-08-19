@@ -12,6 +12,7 @@
         <module>codesocial_base</module>
         <module>codesocial_recruit</module>
         <module>codesocial_qa</module>
+        <module>codesocial_article</module>
     </modules>
     <packaging>pom</packaging>
 
