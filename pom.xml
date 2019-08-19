@@ -13,6 +13,7 @@
         <module>codesocial_recruit</module>
         <module>codesocial_qa</module>
         <module>codesocial_article</module>
+        <module>codesocial_gathering</module>
     </modules>
     <packaging>pom</packaging>
 
