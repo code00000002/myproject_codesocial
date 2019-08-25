@@ -15,6 +15,7 @@
         <module>codesocial_article</module>
         <module>codesocial_gathering</module>
         <module>codesocial_spit</module>
+        <module>codesocial_search</module>
     </modules>
     <packaging>pom</packaging>
 
