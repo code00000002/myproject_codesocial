@@ -98,5 +98,19 @@ public class AdminController {
 		adminService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
-	
+
+	/**
+	 * 用户登录
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("/login")
+	public Result login(@RequestBody Map<String,String> map){
+		Admin admin = adminService.findByLoginnameAndPassword(map.get("loginname"), map.get("password"));
+		if (null != admin){
+			return new Result(true, StatusCode.OK, "登录成功");
+		}else {
+			return new Result(false, StatusCode.ERROR, "用户名或者密码错误");
+		}
+	}
 }

@@ -103,4 +103,20 @@ public class UserController {
 		userService.sendSms(mobile);
 		return new Result(true, StatusCode.OK, "发送短信成功");
 	}
+
+
+	/**
+	 * 用户登录
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("/login")
+	public Result login(@RequestBody Map<String,String> map){
+		User user = userService.findByMobileAndPassword(map.get("mobile"), map.get("password"));
+		if (null != user){
+			return new Result(true, StatusCode.OK, "登录成功", user.getNickname());
+		}else {
+			return new Result(false, StatusCode.ERROR, "用户名或者密码错误");
+		}
+	}
 }

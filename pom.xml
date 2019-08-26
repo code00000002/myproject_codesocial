@@ -17,6 +17,7 @@
         <module>codesocial_spit</module>
         <module>codesocial_search</module>
         <module>codesocial_user</module>
+        <module>codesocial_sms</module>
     </modules>
     <packaging>pom</packaging>
 
