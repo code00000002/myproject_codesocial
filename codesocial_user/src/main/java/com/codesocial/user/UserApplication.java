@@ -1,5 +1,6 @@
 package com.codesocial.user;
 import com.codesocial.utils.IdWorker;
+import com.codesocial.utils.JwtUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,9 @@ public class UserApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
-	
+
+	@Bean
+	public JwtUtil jwtUtil(){
+		return new JwtUtil();
+	}
 }

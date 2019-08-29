@@ -147,10 +147,11 @@ public class AdminService {
 	 * @return
 	 */
 	public Admin findByLoginnameAndPassword(String loginname,String password){
+		// 通过登陆名查询管理员信息
 		Admin admin = adminDao.findByLoginname(loginname);
-		if (null != admin && encoder.matches(password,admin.getPassword())){
+		if(null != admin && encoder.matches(password,admin.getPassword())){
 			return admin;
-		}else {
+		} else {
 			return null;
 		}
 	}

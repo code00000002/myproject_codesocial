@@ -5,10 +5,12 @@ import com.codesocial.entity.Result;
 import com.codesocial.entity.StatusCode;
 import com.codesocial.user.pojo.Admin;
 import com.codesocial.user.service.AdminService;
+import com.codesocial.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,8 +25,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
-	
+
+	@Autowired
+	private JwtUtil jwtUtil;
 	/**
 	 * 查询全部数据
 	 * @return
@@ -99,6 +102,7 @@ public class AdminController {
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
 
+
 	/**
 	 * 用户登录
 	 * @param map
@@ -108,9 +112,16 @@ public class AdminController {
 	public Result login(@RequestBody Map<String,String> map){
 		Admin admin = adminService.findByLoginnameAndPassword(map.get("loginname"), map.get("password"));
 		if (null != admin){
-			return new Result(true, StatusCode.OK, "登录成功");
+			//生成token
+			String token = jwtUtil.createJWT(admin.getId(), admin.getLoginname(), "admin");
+			Map jwtMap = new HashMap();
+			jwtMap.put("token", token);
+			jwtMap.put("name", admin.getLoginname());
+			return new Result(true, StatusCode.OK, "登录成功",jwtMap);
 		}else {
-			return new Result(false, StatusCode.ERROR, "用户名或者密码错误");
+			return new Result(false, StatusCode.LOGINERROR, "用户名或者密码错误");
 		}
+
+
 	}
 }

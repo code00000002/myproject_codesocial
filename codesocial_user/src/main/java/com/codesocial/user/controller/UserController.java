@@ -5,10 +5,13 @@ import com.codesocial.entity.Result;
 import com.codesocial.entity.StatusCode;
 import com.codesocial.user.pojo.User;
 import com.codesocial.user.service.UserService;
+import com.codesocial.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -88,13 +91,35 @@ public class UserController {
 		userService.update(user);		
 		return new Result(true,StatusCode.OK,"修改成功");
 	}
-	
+
+	@Autowired
+	private HttpServletRequest request;
+	@Autowired
+	private JwtUtil jwtUtil;
 	/**
 	 * 删除
 	 * @param id
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
 	public Result delete(@PathVariable String id ){
+		//获取头信心
+		String header = request.getHeader("Authorization");
+		if (null == header){
+			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+		}
+		if (! header.startsWith("Bearer")){
+			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+		}
+		//提取token
+		String token = header.substring(7);
+		Claims claims = jwtUtil.parseJWT(token);
+		if (null ==claims){
+			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+		}
+		if (!"admin".equals(claims.get("admin"))){
+			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+		}
+
 		userService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
