@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -102,24 +103,10 @@ public class UserController {
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
 	public Result delete(@PathVariable String id ){
-		//获取头信心
-		String header = request.getHeader("Authorization");
-		if (null == header){
+		Claims claims = (Claims) request.getAttribute("admin_claims");
+		if (null == claims){
 			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
 		}
-		if (! header.startsWith("Bearer")){
-			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
-		}
-		//提取token
-		String token = header.substring(7);
-		Claims claims = jwtUtil.parseJWT(token);
-		if (null ==claims){
-			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
-		}
-		if (!"admin".equals(claims.get("admin"))){
-			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
-		}
-
 		userService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
@@ -128,7 +115,6 @@ public class UserController {
 		userService.sendSms(mobile);
 		return new Result(true, StatusCode.OK, "发送短信成功");
 	}
-
 
 	/**
 	 * 用户登录
@@ -139,7 +125,13 @@ public class UserController {
 	public Result login(@RequestBody Map<String,String> map){
 		User user = userService.findByMobileAndPassword(map.get("mobile"), map.get("password"));
 		if (null != user){
-			return new Result(true, StatusCode.OK, "登录成功", user.getNickname());
+			String token = jwtUtil.createJWT(user.getId(), user.getNickname(), "user");
+			Map jwtMap = new HashMap();
+			jwtMap.put("token", token);
+			jwtMap.put("name", user.getNickname());
+			jwtMap.put("avatar", user.getAvatar());
+
+			return new Result(true, StatusCode.OK, "登录成功", jwtMap);
 		}else {
 			return new Result(false, StatusCode.ERROR, "用户名或者密码错误");
 		}

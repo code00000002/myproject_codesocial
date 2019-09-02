@@ -11,3 +11,9 @@ aliyun:
     accessKeySecret: 8L1HEVAZJIoLEhavkU5X3rrxeNWdul
     template_code: SMS_164508533
     sign_name: 黑马程序员
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true
