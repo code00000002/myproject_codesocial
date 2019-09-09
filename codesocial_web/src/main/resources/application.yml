@@ -1,0 +1,40 @@
+server:
+  port: 9012
+spring:
+  application:
+    name: codesocial-web #指定服务名
+eureka:
+  client:
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址
+      defaultZone: http://127.0.0.1:6868/eureka/
+  instance:
+    prefer-ip-address: true
+zuul:
+  routes:
+    codesocial-gathering: #活动
+      path: /gathering/** #配置请求URL的请求规则
+      serviceId: codesocial-gathering #指定Eureka注册中心中的服务id
+    codesocial-article: #文章
+      path: /article/** #配置请求URL的请求规则
+      serviceId: codesocial-article #指定Eureka注册中心中的服务id
+    codesocial-base: #基础
+      path: /base/** #配置请求URL的请求规则
+      serviceId: codesocial-base #指定Eureka注册中心中的服务id
+    codesocial-friend: #交友
+      path: /friend/** #配置请求URL的请求规则
+      serviceId: codesocial-friend #指定Eureka注册中心中的服务id
+    codesocial-qa: #问答
+      path: /qa/** #配置请求URL的请求规则
+      serviceId: codesocial-qa #指定Eureka注册中心中的服务id
+    codesocial-recruit: #招聘
+      path: /recruit/** #配置请求URL的请求规则
+      serviceId: codesocial-recruit #指定Eureka注册中心中的服务id
+    codesocial-spit: #吐槽
+      path: /spit/** #配置请求URL的请求规则
+      serviceId: codesocial-spit #指定Eureka注册中心中的服务id
+    codesocial-user: #用户
+      path: /user/** #配置请求URL的请求规则
+      serviceId: codesocial-user #指定Eureka注册中心中的服务id
+    codesocial-search: #搜索
+      path: /search/** #配置请求URL的请求规则
+      serviceId: codesocial-search #指定Eureka注册中心中的服务id

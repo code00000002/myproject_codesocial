@@ -20,6 +20,8 @@
         <module>codesocial_sms</module>
         <module>codesocial_eureka</module>
         <module>codesocial_friend</module>
+        <module>codesocial_manager</module>
+        <module>codesocial_web</module>
     </modules>
     <packaging>pom</packaging>
 

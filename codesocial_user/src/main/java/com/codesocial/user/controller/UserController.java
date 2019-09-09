@@ -136,4 +136,22 @@ public class UserController {
 			return new Result(false, StatusCode.ERROR, "用户名或者密码错误");
 		}
 	}
+
+	/**
+	 * 增加粉丝数
+	 * @param userid
+	 * @param x
+	 * @return
+	 */
+	@PostMapping("/incfans/{userid}/{x}")
+	public Result incFanscount(@PathVariable String userid,@PathVariable int x){
+		userService.incFanscount(userid,x);
+		return new Result(true, StatusCode.OK, "增加粉丝数成功");
+	}
+
+	@PostMapping("/incfollow/{userid}/{x}")
+	public Result incFollowcount(@PathVariable String userid, @PathVariable int x){
+		userService.incFollowcount(userid, x);
+		return new Result(true, StatusCode.OK, "变更关注数成功");
+	}
 }
