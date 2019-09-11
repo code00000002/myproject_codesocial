@@ -4,6 +4,7 @@ import com.codesocial.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("进入拦截器");
         String header = req.getHeader("Authorization");
-        if (null != header && header.startsWith("Bearer ")){
+        if (!StringUtils.isEmpty(header) && header.startsWith("Bearer ")){
             final String token = header.substring(7);
             Claims claims = jwtUtil.parseJWT(token);
             if (null != claims){

@@ -22,6 +22,7 @@
         <module>codesocial_friend</module>
         <module>codesocial_manager</module>
         <module>codesocial_web</module>
+        <module>codesocial_config</module>
     </modules>
     <packaging>pom</packaging>
 

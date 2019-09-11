@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: codesocial-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:code00000001/codesocial-config.git
+server:
+  port: 12000

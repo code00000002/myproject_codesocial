@@ -102,13 +102,18 @@ public class UserController {
 	 * @param id
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
-	public Result delete(@PathVariable String id ){
-		Claims claims = (Claims) request.getAttribute("admin_claims");
+	public Result delete(@PathVariable String id,HttpServletRequest req){
+		/*Claims claims = (Claims) req.getAttribute("admin_claims");
 		if (null == claims){
 			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
 		}
 		userService.deleteById(id);
-		return new Result(true,StatusCode.OK,"删除成功");
+		return new Result(true,StatusCode.OK,"删除成功");*/
+		if (null == req.getAttribute("admin_claims")) {
+			return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+		}
+		userService.deleteById(id);
+		return new Result(true, StatusCode.OK, "删除成功");
 	}
 	@PostMapping("/sendsms/{mobile}")
 	public Result sendSms(@PathVariable String mobile){

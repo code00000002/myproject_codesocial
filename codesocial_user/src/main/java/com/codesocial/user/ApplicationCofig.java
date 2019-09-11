@@ -20,6 +20,6 @@ public class ApplicationCofig extends WebMvcConfigurationSupport {
                 //设置拦截所有
                 .addPathPatterns("/**")
                 //排除的请求
-                .excludePathPatterns("/**/login","/**/");
+                .excludePathPatterns("/**/login");
     }
 }
