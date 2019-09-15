@@ -6,6 +6,8 @@ import com.codesocial.entity.PageResult;
 import com.codesocial.entity.Result;
 import com.codesocial.entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("label")
 @CrossOrigin //允许跨域请求
+@RefreshScope //自定义配置项，需要在类上加这个注解
 public class LabelController {
     @Autowired
     private LabelService labelService;
@@ -82,5 +85,12 @@ public class LabelController {
         Page<Label> labelPage = labelService.findPage(map,page,size);
         PageResult<Label> pageResult = new PageResult<Label>(labelPage.getTotalElements(),labelPage.getContent());
         return Result.success("按条件分页查询成功",pageResult);
+    }
+    @Value("${abc}")
+    private String abc;
+
+    @GetMapping("/abc")
+    public Result abc(){
+        return Result.success("成功",abc);
     }
 }

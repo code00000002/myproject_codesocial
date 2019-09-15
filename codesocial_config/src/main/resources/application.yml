@@ -1,6 +1,8 @@
 spring:
   application:
     name: codesocial-config
+  rabbitmq:
+    host: 192.168.80.129
   cloud:
     config:
       server:
@@ -8,3 +10,8 @@ spring:
           uri: git@github.com:code00000001/codesocial-config.git
 server:
   port: 12000
+management: #暴露触发消息总线的地址
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
